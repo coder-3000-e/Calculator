@@ -1,6 +1,6 @@
 # Calculator
 ```
-Scientific Calculator, built in .Net c#, and written in React for the frontend
+Scientific Calculator
 ```
 ## Getting Started
 ### Software dependencies
