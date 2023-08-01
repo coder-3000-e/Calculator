@@ -1,4 +1,2 @@
 .vscode
 /node_modules
-/src/server/.vs
-/src/client/node_modules

@@ -1,25 +1,73 @@
-import React from "react";
+import React, { useCallback } from "react";
 import "./styles.css";
+import { useDispatch, useSelector } from "react-redux";
+import { calculateAnswer, updateAnswer } from "../../../data/actions";
+import { checkBracketBalanced } from "./helpers";
+import { State } from "../../../data/store";
 
 type DisplayProps = {
-    answer: string;
     input: string;
     onChangeTagInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     inputHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
     clearInput: () => void;
     backspace: () => void;
-    calculateAns: () => Promise<void>;
-    changePlusMinus: () => void;
 };
 
-const Display: React.FC<DisplayProps> = ({ answer, input, onChangeTagInput, inputHandler, clearInput, backspace, calculateAns, changePlusMinus }) => {
+const Display: React.FC<DisplayProps> = ({ input, onChangeTagInput, inputHandler, clearInput, backspace }) => {
+    const dispatch = useDispatch();
+
+    const calculationAnswer = useSelector(
+        (state: State) => state.calculations.answer
+    );
+
+    const calculateAns = useCallback(() => {
+        if (input === "") return;
+        let finalexpression = input;
+        finalexpression = finalexpression.replaceAll("x", "*");
+        finalexpression = finalexpression.replaceAll("÷", "/");
+
+        let noSqrt = input.match(/√[0-9]+/gi);
+
+        if (noSqrt !== null) {
+            let evalSqrt = input;
+            for (let i = 0; i < noSqrt.length; i++) {
+                evalSqrt = evalSqrt.replace(
+                    noSqrt[i],
+                    `sqrt(${noSqrt[i].substring(1)})`
+                );
+            }
+            finalexpression = evalSqrt;
+        }
+
+        let errors = "";
+        try {
+            if (!checkBracketBalanced(finalexpression)) {
+                const errorMessage = { message: "Brackets are not balanced!" };
+                throw errorMessage;
+            }
+
+        } catch (error: any) {
+            errors =
+                error.message === "Brackets are not balanced!"
+                    ? "Brackets are not balanced!"
+                    : "Invalid Input!!";
+        }
+
+        if (errors !== "") {
+            const errorMessage = { message: errors };
+            throw errorMessage;
+        } else {
+            return finalexpression;
+        }
+    }, [input]);
+
     return (
         <>
             <div className="container">
                 <div className="main">
                     <>
                         <div className="display">
-                            {answer === "" ? (
+                            {calculationAnswer === "" ? (
                                 <>
                                     <input
                                         type="text"
@@ -48,7 +96,7 @@ const Display: React.FC<DisplayProps> = ({ answer, input, onChangeTagInput, inpu
                                         type="text"
                                         name="value"
                                         className="input"
-                                        value={answer}
+                                        value={calculationAnswer}
                                         disabled
                                     />
                                 </>
@@ -80,7 +128,10 @@ const Display: React.FC<DisplayProps> = ({ answer, input, onChangeTagInput, inpu
                         <button className="btn" onClick={inputHandler}>
                             2
                         </button>
-                        <button className="btn clr" onClick={clearInput}>
+                        <button className="btn clr" onClick={() => {
+                            clearInput();
+                            dispatch(updateAnswer(""));
+                        }}>
                             AC
                         </button>
                         <button className="btn clr" onClick={backspace}>
@@ -120,21 +171,21 @@ const Display: React.FC<DisplayProps> = ({ answer, input, onChangeTagInput, inpu
                             9
                         </button>
                         <button className="btn exp" onClick={inputHandler}>
-                            ±
-                        </button>
-                        <button className="btn exp" onClick={inputHandler}>
-                            <sup>3</sup>√
+                            .
                         </button>
                         <button className="btn exp" onClick={inputHandler}>
                             +
                         </button>
-                        <button className="btn exp" onClick={changePlusMinus}>
+                        <button className="btn exp" onClick={inputHandler}>
                             -
                         </button>
                         <button className="btn exp" onClick={inputHandler}>
-                            .
+                            <sup>3</sup>√
                         </button>
-                        <button className="btn exp equal" id="equalbtn" onClick={calculateAns}>
+                        <button className="btn exp equal" id="equalbtn" onClick={() => {
+                            const calculation = calculateAns() ?? "";
+                            dispatch(calculateAnswer(calculation));
+                        }}>
                             =
                         </button>
                     </div>

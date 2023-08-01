@@ -9,7 +9,7 @@ import CalculationPage from './pages/CalculationPage';
 const App = () => {
   return (
     <BrowserRouter>
-      <header style={{ height: '14vh' }}>
+      <header style={{ height: '14vh'}} >
         <NavBar />
       </header>
       <Routes>
@@ -24,14 +24,14 @@ const App = () => {
             <div className="footer-col">
               <h4>Calculator</h4>
               <ul>
-                <li><a href="#/about">About</a></li>
-                <li><a href="#/calculator">Calculator</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/calculator">Calculator</a></li>
               </ul>
             </div>
             <div className="footer-col">
               <h4>Help</h4>
               <ul>
-                <li><a href="#/contact">Contact</a></li>
+                <li><a href="/contact">Contact</a></li>
               </ul>
             </div>
           </div>

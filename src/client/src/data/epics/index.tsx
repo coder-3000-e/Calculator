@@ -1,35 +1,34 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { combineEpics, Epic, ofType } from 'redux-observable';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { CalculateFailureAction, CalculateRequestedAction, CalculateSucceededAction } from './action-types';
+import { Epic, ofType } from 'redux-observable';
+import { from, of } from 'rxjs';
+import { map, catchError, mergeMap } from 'rxjs/operators';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import settings from '../settings';
 
 const calculateAnswerEpic: Epic = (action$) =>
   action$.pipe(
-    ofType<CalculateRequestedAction, any>('CALCULATION_REQUESTED'),
+    ofType('CALCULATION_REQUESTED'),
     map((action) => action.payload.calculation),
-    map((calculation) => {
-      const config: AxiosRequestConfig = {
+    mergeMap((calculation) => {
+      const config = {
         url: `${settings.calculatorRoot}/api/v1/Calculator/calculate`,
         method: 'POST',
-        params: { value: calculation },
+        data: { value: calculation },
       };
 
-      return axios(config).then(
-        (response: AxiosResponse): CalculateSucceededAction => ({
+      return from(axios(config)).pipe(
+        map((response: AxiosResponse) => ({
           type: 'CALCULATION_SUCCEEDED',
           payload: { response },
-        })
+        })),
+        catchError((error: AxiosError) =>
+          of({
+            type: 'CALCULATION_FAILED',
+            payload: { response: error },
+            error: true,
+          })
+        )
       );
-    }),
-    catchError((error: AxiosError): Observable<CalculateFailureAction> =>
-      of({
-        type: 'CALCULATION_FAILED',
-        payload: { response: error },
-        error: true,
-      })
-    )
+    })
   );
 
-export default combineEpics(calculateAnswerEpic);
+export default calculateAnswerEpic;

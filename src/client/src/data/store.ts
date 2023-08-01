@@ -1,25 +1,30 @@
-import { applyMiddleware, combineReducers } from "redux";
-import { CalculationStatus } from "./types";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { legacy_createStore as createStore } from 'redux';
-import reducer from "./reducer";
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { combineEpics, createEpicMiddleware } from 'redux-observable';
+import reducer from './reducer';
+import calculateAnswerEpic from './epics';
+import thunk from 'redux-thunk';
+import { CalculationStatus } from './types';
 
 interface DefaultRootState { }
 export type State = DefaultRootState & {
     calculations: CalculationStatus;
 }
 
-const composedEnhancer = composeWithDevTools(
-    // Add whatever middleware you actually want to use here
-    applyMiddleware()
-    // other store enhancers if any
-)
+const epicMiddleware = createEpicMiddleware();
+
+const middleware = [thunk, epicMiddleware];
+
+const composedEnhancer = composeWithDevTools(applyMiddleware(...middleware));
 
 const rootReducer = combineReducers({
-    // Define a top-level state field named `todos`, handled by `todosReducer`
-    calculations: reducer,
-})
+  calculations: reducer,
+});
 
-export default rootReducer
+const store = createStore(rootReducer, composedEnhancer);
 
-export const store = createStore(rootReducer, composedEnhancer)
+const rootEpic = combineEpics(calculateAnswerEpic);
+
+epicMiddleware.run(rootEpic);
+
+export default store;

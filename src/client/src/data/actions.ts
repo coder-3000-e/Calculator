@@ -1,4 +1,4 @@
-import { CalculateRequestedAction } from "./epics/action-types";
+import { CalculateRequestedAction, UpdateAnswerAction } from "./epics/action-types";
 
 export const calculateAnswer = (
     calculation: string
@@ -6,3 +6,8 @@ export const calculateAnswer = (
     type: 'CALCULATION_REQUESTED',
     payload: { calculation },
 })
+
+export const updateAnswer = (newValue: string): UpdateAnswerAction => ({
+    type: 'UPDATE_ANSWER',
+    payload: { newValue },
+  });

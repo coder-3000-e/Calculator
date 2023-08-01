@@ -1,0 +1,87 @@
+#home {
+    height: calc(120vh - 300px);
+    position: relative;
+
+    >div {
+        height: 100%;
+    }
+
+    .home-content {
+        height: 100%;
+        background-position: center;
+        background-size: cover;
+
+        &:before {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            opacity: 0.7;
+        }
+
+        .intro {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+
+            .title {
+                background-color: aliceblue;
+                font-weight: bold;
+                margin: 10px;
+
+                @media (min-width: 768px) {
+                    font-size: 4rem;
+                }
+            }
+
+            .sub-title {
+                background-color: aliceblue;
+                font-weight: normal;
+                max-width: 700px;
+                margin: 0 auto;
+                letter-spacing: 1px;
+                font-size: 1rem;
+
+                @media (min-width: 768px) {
+                    font-size: 1.2rem;
+                }
+            }
+
+            .button {
+                display: flex;
+                padding: 10px 20px;
+                background-color: #516f90;
+                color: #fff;
+                text-decoration: none;
+                border: none;
+                border-radius: 4px;
+                text-align: center;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                font-size: 25px;
+                margin: 7px;
+                align-items: flex-start;
+                justify-content: center;
+                align-content: center;
+                flex-wrap: nowrap;
+            }
+
+            .button:hover {
+                background-color: #143151;
+            }
+
+            .button:focus {
+                outline: none;
+            }
+
+        }
+    }
+}
