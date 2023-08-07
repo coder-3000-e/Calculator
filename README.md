@@ -18,3 +18,6 @@ Scientific Calculator
 - In your terminal
   -  `cd ./src/server/`
   - `dotnet run`
+
+## TODO 
+- How to run https://github.com/coder-3000-e/Math-Question--Generator for generating math problem
