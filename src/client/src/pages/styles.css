@@ -85,3 +85,46 @@
         }
     }
 }
+
+.about-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .about-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .about-description {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .about-author {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .key-features {
+    font-weight: bold;
+    margin-bottom: 8px;
+    margin-top: 8px;
+  }
+  
+  .feature-list {
+    list-style: none;
+    padding-left: 20px;
+  }
+  
+  .feature-list li {
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .feature-list li:hover {
+    color: rgb(37, 112, 144);
+  }
