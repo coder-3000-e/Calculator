@@ -30,6 +30,9 @@ const Navbar = () => {
                             <NavLink to="/calculator">Calculator</NavLink>
                         </li>
                         <li onClick={handleShowNavbar}>
+                            <NavLink to="/generate_math_problem" >Generate</NavLink>
+                        </li>
+                        <li onClick={handleShowNavbar}>
                             <NavLink to="/about" >About</NavLink>
                         </li>
                         <li onClick={handleShowNavbar}>

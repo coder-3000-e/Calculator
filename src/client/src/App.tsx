@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import CalculationPage from './pages/CalculationPage';
+import MathProblemGeneratorPage from './pages/MathProblemGeneratorPage';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/calculator" element={<CalculationPage />} />
+        <Route path="/generate_math_problem" element={<MathProblemGeneratorPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
@@ -26,6 +28,7 @@ const App = () => {
               <ul>
                 <li><a href="/about">About</a></li>
                 <li><a href="/calculator">Calculator</a></li>
+                <li><a href="/generate_math_problem">Generate</a></li>
               </ul>
             </div>
             <div className="footer-col">

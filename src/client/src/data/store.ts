@@ -4,11 +4,11 @@ import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import reducer from './reducer';
 import calculateAnswerEpic from './epics';
 import thunk from 'redux-thunk';
-import { CalculationStatus } from './types';
+import { CalculatorStatus } from './types';
 
 interface DefaultRootState { }
 export type State = DefaultRootState & {
-    calculations: CalculationStatus;
+    calculations: CalculatorStatus;
 }
 
 const epicMiddleware = createEpicMiddleware();

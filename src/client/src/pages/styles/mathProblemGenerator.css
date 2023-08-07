@@ -1,0 +1,33 @@
+.math-problem-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+  }
+  
+  .button {
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .memoContainer {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 1;
+    height: 80vh;
+    overflow-y: auto;
+  }
+  
