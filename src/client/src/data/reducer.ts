@@ -39,7 +39,7 @@ const reducer: Reducer<CalculatorStatus, calculatorAction> = (
             };
         case 'UPDATE_ANSWER': {
             const { newValue } = action.payload;
-            debugger;
+
             const newValueInt = Number(newValue);
             const result =
                 isNaN(newValueInt)
