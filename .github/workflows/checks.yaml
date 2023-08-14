@@ -25,14 +25,13 @@ jobs:
       - name: Install Dependencies
         run: npm install
         env:
-          CI: true  # Setting CI environment variable to prevent progress bars
+          CI: true
 
       - name: Run Tests
         run: npm test
         env:
-          CI: true  # Setting CI environment variable to prevent progress bars
+          CI: true
 
-      # Adding a step to display the summary
       - name: Show Summary
         run: |
           echo "Test step completed: $GITHUB_STEP_SUMMARY"
