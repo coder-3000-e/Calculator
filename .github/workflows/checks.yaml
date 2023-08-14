@@ -29,7 +29,7 @@ jobs:
         run: |
           cd src/client
           npm test
-          cd src/client/__tests__
+          cd __tests__
           echo "::set-output name=results::$(cat jest-results.json)"
 
       - name: Show Summary
