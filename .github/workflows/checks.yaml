@@ -30,11 +30,11 @@ jobs:
           cd src/client
           npm test
           cd __tests__
-          echo "::set-env name=RESULTS::$(cat jest-results.json)"
+          echo "RESULTS=$(cat jest-results.json)" >> $GITHUB_ENV
 
       - name: Show Summary
         run: |
           echo "Test step completed: $GITHUB_STEP_SUMMARY"
           echo "Jest Test Results:"
-          echo "${{ env.RESULTS }}" | jq -r '.testResults[] | "Test Suite: \(.name)\nPassed Tests: \(.numPassedTests)\nFailed Tests: \(.numFailedTests)\nTotal Tests: \(.numTotalTests)\n"'
+          echo "$RESULTS" | jq -r '.testResults[] | "Test Suite: \(.name)\nPassed Tests: \(.numPassedTests)\nFailed Tests: \(.numFailedTests)\nTotal Tests: \(.numTotalTests)\n"'
 
