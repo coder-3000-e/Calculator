@@ -34,4 +34,5 @@ jobs:
 
       # Adding a step to display the summary
       - name: Show Summary
-        run: echo "Test step completed: $GITHUB_STEP_SUMMARY"
+        run: |
+          echo "Test step completed: $GITHUB_STEP_SUMMARY"
