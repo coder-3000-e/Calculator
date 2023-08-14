@@ -1,0 +1,42 @@
+name: Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Dependencies
+        run: | 
+          cd src/client
+          npm install
+
+      - name: Run Tests and Capture Output
+        id: run_tests
+        run: |
+          cd src/client
+          npm test
+          cd __tests__
+          echo "RESULTS=$(cat jest-results.json)" >> $GITHUB_ENV
+
+      - name: Show Summary
+        run: |
+          echo '## Test Completed! 🚀' >> $GITHUB_STEP_SUMMARY
+          echo '### Jest Test Results: ' >> $GITHUB_STEP_SUMMARY
+          echo "$RESULTS" | jq -r '.testResults[0] | "#### numPassedTests: .numPassedTests"' >> $GITHUB_STEP_SUMMARY
+          echo "$RESULTS" | jq -r '.testResults[0] | "#### numFailedTests: .numFailedTests"' >> $GITHUB_STEP_SUMMARY
+          echo "$RESULTS" | jq -r '.testResults[0].assertionResults[] | "Test Suite: \(.ancestorTitles | join(" » "))\nTest: \(.title)\nStatus: \(.status)\n"' >> $GITHUB_STEP_SUMMARY
+
