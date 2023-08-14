@@ -27,7 +27,9 @@ jobs:
       - name: Run Tests and Capture Output
         id: run_tests
         run: |
-          npm test > jest-results.json
+          cd src/client
+          npm test
+          cd src/client/__tests__
           echo "::set-output name=results::$(cat jest-results.json)"
 
       - name: Show Summary
