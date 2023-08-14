@@ -27,7 +27,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "jest --coverage"
+    "test": "jest --coverage --json --outputFile=__tests__/jest-results.json"
   },
   "eslintConfig": {
     "extends": [
