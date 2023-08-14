@@ -24,11 +24,16 @@ jobs:
           cd src/client
           npm install
 
-      - name: Run Tests
+      - name: Run Tests and Capture Output
+        id: run_tests
         run: |
-          cd src/client
-          npm test
+          npm test > jest-results.json
+          echo "::set-output name=results::$(cat jest-results.json)"
 
       - name: Show Summary
         run: |
-          echo '### Tests completed! 🚀' >> $GITHUB_STEP_SUMMARY
+          echo "Test step completed: $GITHUB_STEP_SUMMARY"
+          echo "Jest Test Results:"
+          echo "$RESULTS" | jq -r '.testResults[] | "Test Suite: \(.name)\nPassed Tests: \(.numPassedTests)\nFailed Tests: \(.numFailedTests)\nTotal Tests: \(.numTotalTests)\n"'
+        env:
+          RESULTS: ${{ steps.run_tests.outputs.results }}
