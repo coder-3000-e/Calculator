@@ -12,10 +12,10 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
           node-version: '16'
 
@@ -30,12 +30,11 @@ jobs:
           cd src/client
           npm test
           cd __tests__
-          echo "::set-output name=results::$(cat jest-results.json)"
+          echo "::set-env name=RESULTS::$(cat jest-results.json)"
 
       - name: Show Summary
         run: |
           echo "Test step completed: $GITHUB_STEP_SUMMARY"
           echo "Jest Test Results:"
-          echo "$RESULTS" | jq -r '.testResults[] | "Test Suite: \(.name)\nPassed Tests: \(.numPassedTests)\nFailed Tests: \(.numFailedTests)\nTotal Tests: \(.numTotalTests)\n"'
-        env:
-          RESULTS: ${{ steps.run_tests.outputs.results }}
+          echo "${{ env.RESULTS }}" | jq -r '.testResults[] | "Test Suite: \(.name)\nPassed Tests: \(.numPassedTests)\nFailed Tests: \(.numFailedTests)\nTotal Tests: \(.numTotalTests)\n"'
+
