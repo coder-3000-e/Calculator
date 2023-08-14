@@ -19,16 +19,17 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Navigate into directory
-        run: cd src/client
-
       - name: Install Dependencies
-        run: npm install
+        run: | 
+          cd src/client
+          npm install
         env:
           CI: true
 
       - name: Run Tests
-        run: npm test
+        run: |
+          cd src/client
+          npm test
         env:
           CI: true
 
