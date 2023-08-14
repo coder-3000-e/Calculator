@@ -35,6 +35,6 @@ jobs:
       - name: Show Summary
         run: |
           echo '### Test Completed! 🚀' >> $GITHUB_STEP_SUMMARY
-          echo "Jest Test Results:"
-          echo "$RESULTS" | jq -r '.testResults[0].assertionResults[] | "Test Suite: \(.ancestorTitles | join(" » "))\nTest: \(.title)\nStatus: \(.status)\n"'
+          echo '## Jest Test Results: ' >> $GITHUB_STEP_SUMMARY
+          echo "$RESULTS" | jq -r '.testResults[0].assertionResults[] | "Test Suite: \(.ancestorTitles | join(" » "))\nTest: \(.title)\nStatus: \(.status)\n"' >> $GITHUB_STEP_SUMMARY
 
