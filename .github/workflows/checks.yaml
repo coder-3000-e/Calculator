@@ -34,7 +34,7 @@ jobs:
         uses: im-open/process-jest-test-results@v2.1.3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          results-file: 'src/client/__tests__/jest-results.json
+          results-file: 'src/client/__tests__/jest-results.json'
 
       - name: Show Summary
         run: |
