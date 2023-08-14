@@ -1,0 +1,8 @@
+version: '3'
+services:
+  math-question-generator:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    ports:
+      - "8000:8000"

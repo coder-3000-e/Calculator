@@ -1,0 +1,24 @@
+# Use the official Python image as base image for the Python application
+FROM python:3.10-slim AS python-build
+
+# Install git and other dependencies
+RUN apt-get update && \
+    apt-get install -y git
+
+# Install Poetry
+RUN pip install poetry
+
+# Set the working directory for the Python application
+WORKDIR /app/Math-Question--Generator
+
+# Clone the repository
+RUN git clone https://github.com/coder-3000-e/Math-Question--Generator .
+
+# Install dependencies using Poetry
+RUN poetry install
+
+# Expose the port the Python application will run on
+EXPOSE 8000
+
+# Run the Python UVicorn server
+CMD ["poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

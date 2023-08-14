@@ -7,6 +7,7 @@ Scientific Calculator
 - .NET 6 SDK
 - Node v16.18.x
 - Dotnet CLI
+- Docker
 
 ## Frontend
 - In your terminal
@@ -16,8 +17,8 @@ Scientific Calculator
 
 ## Backend
 - In your terminal
-  -  `cd ./src/server/`
+  -  `cd ./src/server/Ryzen`
+  - `dotnet build`
   - `dotnet run`
-
-## TODO 
-- How to run https://github.com/coder-3000-e/Math-Question--Generator for generating math problem
+- Running the math questions generator
+  - From the root directory run : `docker-compose up --build`
